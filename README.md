@@ -2,7 +2,7 @@
 
 게임 속 경험을 소리로 설계합니다. 생성형 AI 효과음 디자인, 타이틀 음악 작·편곡, Unreal Engine 5 인게임 사운드 적용, 로컬 AI 음성 도구 개발 경험을 넷마블 AI 사운드 엔지니어 직무에 맞춰 정리했습니다.
 
-**[피그마 포트폴리오 보기](https://www.figma.com/design/rypMoQBLath1k7iPY1G8ho)** · **[한·영 게임 대사 4개 듣기](listen.html)** · [연락처](mailto:taito.p23@gmail.com)
+**[피그마 포트폴리오 보기](https://www.figma.com/design/rypMoQBLath1k7iPY1G8ho)** · **[한·영 게임 대사 4개 바로 듣기](https://taitop23-blip.github.io/take-studio-ai-sound-portfolio/listen.html)** · [연락처](mailto:taito.p23@gmail.com)
 
 ## 작업 사례
 

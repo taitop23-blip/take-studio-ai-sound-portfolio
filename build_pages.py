@@ -221,22 +221,23 @@ p.text(72, 806, "원본 WAV 4개와 생성 설정·대사·ASR 점검 결과: Gi
 p.save("voice_samples")
 
 p = Page(10, "Links / Contact")
-p.title("LISTEN  /  REVIEW  /  CONTACT", "소리와 작업 과정을 직접 확인하세요", "직무와 연결되는 결과물만 모았습니다.")
-p.rect(70, 330, 1460, 417, CARD, 24)
+p.title("LISTEN  /  REVIEW  /  CONTACT", "소리와 작업 과정을 직접 확인하세요", "게임 대사와 발매 음원, 제작 소스를 한곳에 모았습니다.")
+p.rect(70, 315, 1460, 482, CARD, 24)
 link_rows = [
-    ("01", "Take Studio 소스·포트폴리오·대사 샘플", REPO),
-    ("02", "난로 — 믹싱·마스터링", "https://www.youtube.com/watch?v=lJyOIjUblrU"),
-    ("03", "새벽편지 — 믹싱·마스터링", "https://www.youtube.com/watch?v=melVFdUn6LA"),
-    ("04", "연락처", "taito.p23@gmail.com"),
+    ("01", "게임 대사 4개 바로 듣기", "https://taitop23-blip.github.io/take-studio-ai-sound-portfolio/listen.html"),
+    ("02", "Take Studio 소스·생성 설정", REPO),
+    ("03", "난로 — 믹싱·마스터링", "https://www.youtube.com/watch?v=lJyOIjUblrU"),
+    ("04", "새벽편지 — 믹싱·마스터링", "https://www.youtube.com/watch?v=melVFdUn6LA"),
+    ("05", "연락처", "taito.p23@gmail.com"),
 ]
 for i, (n, label, link) in enumerate(link_rows):
-    y = 385 + i * 92
+    y = 367 + i * 83
     p.text(109, y, n, 22, LIME, 700)
-    p.text(179, y, label, 26, WHITE, 700)
-    p.text(179, y + 34, link, 20, CYAN)
+    p.text(179, y, label, 24, WHITE, 700)
+    p.text(179, y + 31, link, 18, CYAN)
     if i < len(link_rows) - 1:
-        p.line(110, y + 50, 1490, y + 50, LINE)
-p.text(76, 799, "ProjectATM은 비공개 팀 저장소입니다. 공개 가능한 구조 설명만 이 포트폴리오에 담았습니다.", 18, MUTED)
+        p.line(110, y + 45, 1490, y + 45, LINE)
+p.text(76, 820, "ProjectATM은 비공개 팀 저장소입니다. 공개 가능한 구조 설명만 이 포트폴리오에 담았습니다.", 18, MUTED)
 p.save("links")
 
 print(f"Built {len(list(OUT.glob('*.svg')))} SVG pages in {OUT}")
