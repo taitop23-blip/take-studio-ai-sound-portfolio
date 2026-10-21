@@ -20,4 +20,5 @@ vendor/
 *.7z
 *.log
 *.pid
+tmp/
 .DS_Store

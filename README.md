@@ -2,7 +2,7 @@
 
 게임 속 경험을 소리로 설계합니다. 생성형 AI 효과음 디자인, 타이틀 음악 작·편곡, Unreal Engine 5 인게임 사운드 적용, 로컬 AI 음성 도구 개발 경험을 넷마블 AI 사운드 엔지니어 직무에 맞춰 정리했습니다.
 
-**[피그마 포트폴리오 보기](https://www.figma.com/design/rypMoQBLath1k7iPY1G8ho)** · **[한·영 게임 대사 4개 바로 듣기](https://taitop23-blip.github.io/take-studio-ai-sound-portfolio/listen.html)** · [연락처](mailto:taito.p23@gmail.com)
+**[피그마 포트폴리오 보기](https://www.figma.com/design/rypMoQBLath1k7iPY1G8ho?node-id=2-910)** · **[제출용 PDF](output/pdf/ParkJunmin_AI_Sound_Engineer_Portfolio.pdf)** · **[한·영 게임 대사 4개 바로 듣기](https://taitop23-blip.github.io/take-studio-ai-sound-portfolio/listen.html)** · [연락처](mailto:taito.p23@gmail.com)
 
 ## 작업 사례
 
@@ -43,6 +43,7 @@ assets/           실제 앱 화면
 audio_samples/    네 가지 WAV와 생성 설정·점검 기록
 figma_pages/      피그마에 가져온 편집 가능한 SVG 10장
 listen.html       브라우저 청취 페이지
+output/pdf/       제출용 PDF (10장, 청취·코드 링크 포함)
 ```
 
 실행 가능한 오프라인 패키지와 모델 파일은 용량 및 사용 조건 때문에 이 저장소에 넣지 않았습니다. ProjectATM 팀 저장소의 코드·게임 에셋도 포함하지 않습니다.
