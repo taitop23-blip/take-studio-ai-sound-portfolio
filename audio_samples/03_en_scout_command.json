@@ -1,0 +1,37 @@
+{
+  "id": "4af1333a30dd4a96a8650d6d8f17972a",
+  "mode": "tts",
+  "status": "completed",
+  "stage": "completed",
+  "message": "작업을 완료했습니다.",
+  "created_at": 1792580595.5046542,
+  "title": "The signal is back. Hold your position until I give the word.",
+  "result": {
+    "duration": 3.2,
+    "text": "The signal is back. Hold your position until I give the word.",
+    "engine": "VoxCPM2 · 2B · 48kHz",
+    "settings": {
+      "model_revision": "32279effe8c19989596f05d353d1447f51d9e915",
+      "precision": "bfloat16",
+      "style_direction": "firm and determined",
+      "reference_used": true,
+      "reference_transcript_used": false,
+      "seed": 707,
+      "max_audio_frames": 96,
+      "cfg_value": 2.0,
+      "inference_timesteps": 10,
+      "length_limit_reached": false,
+      "export_format": "WAV / PCM 24bit",
+      "raw_format": "WAV / Float32",
+      "raw_peak_dbfs": -4.582,
+      "export_gain_db": 0.0,
+      "export_peak_dbfs": -4.582,
+      "export_processing": "constant gain only; no compression, EQ, or resampling",
+      "resident_model": true
+    },
+    "audio_url": "/media/jobs/4af1333a30dd4a96a8650d6d8f17972a/inference/output.wav",
+    "raw_audio_url": "/media/jobs/4af1333a30dd4a96a8650d6d8f17972a/inference/output_raw.wav",
+    "elapsed_seconds": 4.78,
+    "settings_url": "/media/jobs/4af1333a30dd4a96a8650d6d8f17972a/settings.json"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "6872762f41994fde8bb9589e6da5fcd8",
+  "mode": "tts",
+  "status": "completed",
+  "stage": "completed",
+  "message": "작업을 완료했습니다.",
+  "created_at": 1792580586.4717531,
+  "title": "괜찮아. 여기까지 잘 왔어. 이제 숨을 고르고, 내 목소리만 따라와.",
+  "result": {
+    "duration": 4.64,
+    "text": "괜찮아. 여기까지 잘 왔어. 이제 숨을 고르고, 내 목소리만 따라와.",
+    "engine": "VoxCPM2 · 2B · 48kHz",
+    "settings": {
+      "model_revision": "32279effe8c19989596f05d353d1447f51d9e915",
+      "precision": "bfloat16",
+      "style_direction": "relieved",
+      "reference_used": true,
+      "reference_transcript_used": false,
+      "seed": 1039,
+      "max_audio_frames": 96,
+      "cfg_value": 2.0,
+      "inference_timesteps": 10,
+      "length_limit_reached": false,
+      "export_format": "WAV / PCM 24bit",
+      "raw_format": "WAV / Float32",
+      "raw_peak_dbfs": -0.461,
+      "export_gain_db": -0.539,
+      "export_peak_dbfs": -1.0,
+      "export_processing": "constant gain only; no compression, EQ, or resampling",
+      "resident_model": true
+    },
+    "audio_url": "/media/jobs/6872762f41994fde8bb9589e6da5fcd8/inference/output.wav",
+    "raw_audio_url": "/media/jobs/6872762f41994fde8bb9589e6da5fcd8/inference/output_raw.wav",
+    "elapsed_seconds": 7.03,
+    "settings_url": "/media/jobs/6872762f41994fde8bb9589e6da5fcd8/settings.json"
+  }
+}

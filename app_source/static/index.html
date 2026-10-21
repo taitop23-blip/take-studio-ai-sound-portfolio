@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Take Studio · 로컬 음성 제작</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/studio.css">
+  <link rel="stylesheet" href="/static/voices.css">
+  <link rel="icon" href="/static/take-studio.svg" type="image/svg+xml">
+  <script defer src="/static/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">작업 공간으로 이동</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Take Studio 처음 화면"><img src="/static/take-studio.svg" width="34" height="34" alt=""><span>take<span class="brand-sub">STUDIO</span></span></a>
+      <span class="workspace-label">VOICE WORKSPACE <span>/</span> <span id="workspace-mode">대사 제작</span></span>
+      <div class="system-summary"><span id="connection-dot" class="status-dot"></span><span id="system-state">연결 확인 중</span><span class="local-label">ON DEVICE</span></div>
+    </header>
+
+    <div class="workspace-intro"><div><p class="eyebrow">YOUR VOICE, YOUR DIRECTION</p><h1 id="page-title">대사 제작</h1><p id="page-subtitle">한 줄의 대사에서, 캐릭터의 목소리까지.</p></div><details class="system-details"><summary>모델 관리 <span id="model-count">확인 중</span></summary><div class="system-popover"><h2>현재 실행 환경</h2><p id="gpu-info">GPU 정보를 불러오는 중입니다.</p><ul id="model-list"><li>모델 상태를 확인하고 있습니다.</li></ul><button class="button text-button" type="button" id="refresh-status">상태 새로고침</button><button class="button text-button" type="button" id="release-engine">GPU 메모리 비우기</button></div></details></div>
+
+    <nav class="mode-tabs" role="tablist" aria-label="음성 작업 선택">
+      <button id="tab-tts" class="mode-tab active" role="tab" aria-selected="true" aria-controls="panel-tts" tabindex="0" data-tab="tts"><span class="tab-icon" aria-hidden="true">T</span>대사 연기<span class="tab-note">텍스트에서 음성으로</span></button>
+      <button id="tab-convert" class="mode-tab" role="tab" aria-selected="false" aria-controls="panel-convert" tabindex="-1" data-tab="convert"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4-4-4 4 4 4"/></svg>보이스 체인지<span class="tab-note">목소리 바꾸기</span></button>
+      <button id="tab-voice" class="mode-tab" role="tab" aria-selected="false" aria-controls="panel-voice" tabindex="-1" data-tab="voice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4m-3 0h6"/></svg>음성 대화·분석<span class="tab-note">듣고 답하기</span></button>
+    </nav>
+    <div class="rail-bottom"><span class="rail-line"></span><p>로컬에서 만드는<br>나만의 목소리.</p><small>TAKE STUDIO · 1.0 RC</small></div>
+
+    <main id="workspace" tabindex="-1">
+      <div id="engine-strip" class="engine-strip" role="status"><span class="engine-signal"></span><div><strong id="engine-title">음성 엔진 확인 중</strong><span id="engine-message">서버와 연결하고 있습니다.</span></div><button id="retry-engine" type="button" class="button quiet-button" hidden>모델 다시 준비</button></div>
+      <div id="notice" class="notice" role="alert" hidden><span id="notice-text"></span><button type="button" id="dismiss-notice" aria-label="알림 닫기">×</button></div>
+      <form id="studio-form" novalidate>
+        <div class="studio-grid">
+          <div class="editor-column">
+            <section id="panel-tts" class="mode-panel editor-panel" role="tabpanel" aria-labelledby="tab-tts">
+              <div class="panel-heading"><div><span class="step-label">01 / SCRIPT</span><h2>어떤 말을 할까요?</h2><p>읽을 대사만 적고, 감정과 발성은 연기 설정에서 골라주세요.</p></div><span id="dialogue-count" class="count-label">0 / 1,500자</span></div>
+              <label class="sr-only" for="dialogue">읽을 대사</label><textarea id="dialogue" maxlength="1500" class="dialogue-editor" placeholder="여기에 캐릭터가 말할 대사를 입력하세요." spellcheck="false"></textarea>
+              <div class="editor-bottom"><span class="keyboard-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd>로 생성</span><span id="draft-status">이 PC에 초안 자동 저장</span></div>
+              <div class="reference-section"><div class="section-heading"><h3>화자 선택</h3><span class="optional-label">선택</span></div><p class="help-text">내장 화자 4명을 미리 듣고 고르거나 직접 녹음을 넣을 수 있습니다.</p>
+                <label class="sr-only" for="tts-voice">대사 연기 화자</label><select id="tts-voice" class="voice-select"><option value="default">기본 화자</option><option value="custom">직접 음성 올리기</option></select>
+                <p id="tts-voice-note" class="help-text voice-description">기본 모델 화자를 사용합니다.</p><audio id="tts-voice-preview" class="voice-preview" controls preload="none" aria-label="선택한 화자 미리 듣기" hidden></audio>
+                <div id="tts-custom-reference" hidden>
+                <div class="upload-zone compact" data-upload="tts-reference"><input class="file-input" type="file" id="tts-reference-file" accept="audio/*"><label class="upload-label" for="tts-reference-file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m-4 4 4-4 4 4M5 14v6h14v-6"/></svg><span>참조 음성 선택</span><small>또는 파일을 여기로 끌어오세요</small></label><div class="upload-preview" hidden></div></div>
+                <label class="field-label" for="reference-text">참조 음성의 대사 <span>선택</span></label><textarea id="reference-text" maxlength="2000" class="small-textarea" rows="2" placeholder="참조 음성에서 말한 내용을 입력하세요."></textarea><p id="reference-mode-note" class="help-text" hidden>VoxCPM2는 연기 설정을 적용할 때 참조 음색을 사용합니다. 감정·발성·속도가 모두 기본값이면 참조 대사도 함께 활용합니다.</p></div>
+              </div>
+            </section>
+
+            <section id="panel-convert" class="mode-panel editor-panel" role="tabpanel" aria-labelledby="tab-convert" hidden>
+              <div class="panel-heading"><div><h2>연기는 그대로, 다른 목소리로</h2><p>원본 음성과 원하는 목소리의 참조 음성을 넣어주세요.</p></div></div>
+              <div class="conversion-inputs"><div class="conversion-source"><div class="section-heading"><h3>원본 음성</h3><span class="required-label">필수</span></div><p class="help-text">대사와 연기가 담긴 음성 · 최대 120초</p><div class="upload-zone" data-upload="convert-source"><input class="file-input" type="file" id="convert-source-file" accept="audio/*"><label class="upload-label" for="convert-source-file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4m4-8v12m4-15v18m4-15v12m4-8v4"/></svg><span>원본 음성 선택</span><small>또는 파일을 끌어오세요</small></label><div class="upload-preview" hidden></div></div><button class="record-button conversion-record" id="convert-record-button" type="button"><span class="record-dot" aria-hidden="true"></span><span id="convert-record-label">직접 녹음</span></button><p id="convert-record-status" class="help-text" role="status">최대 120초, 시간이 되면 자동으로 마칩니다.</p></div><span class="conversion-arrow" aria-hidden="true">→</span><div class="conversion-reference"><div class="section-heading"><h3>목표 목소리</h3><span class="required-label">필수</span></div><label class="sr-only" for="convert-voice">변환할 화자</label><select id="convert-voice" class="voice-select"><option value="custom">직접 음성 올리기</option></select><p id="convert-voice-note" class="help-text voice-description">5~15초의 참조 음성을 넣어주세요(최대 30초).</p><audio id="convert-voice-preview" class="voice-preview" controls preload="none" aria-label="목표 화자 미리 듣기" hidden></audio><div id="convert-custom-reference"><div class="upload-zone" data-upload="convert-reference"><input class="file-input" type="file" id="convert-reference-file" accept="audio/*"><label class="upload-label" for="convert-reference-file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m-4 4 4-4 4 4M5 14v6h14v-6"/></svg><span>목표 음성 선택</span><small>또는 파일을 끌어오세요</small></label><div class="upload-preview" hidden></div></div></div></div></div>
+              <div class="inline-info"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 10v7m0-10v1"/></svg><p>원본의 말투와 타이밍을 살리는 변환입니다. 직접 연기한 음성으로 캐릭터의 전달력을 조정해 보세요.</p></div>
+            </section>
+
+            <section id="panel-voice" class="mode-panel editor-panel" role="tabpanel" aria-labelledby="tab-voice" hidden>
+              <div class="panel-heading"><div><h2>음성 대화·분석</h2><p>30초 이하의 음성을 녹음하거나 업로드해 주세요.</p></div><button type="button" id="new-session" class="button quiet-button">새 대화</button></div>
+              <fieldset class="voice-task"><legend class="sr-only">음성 작업 방식</legend><label><input type="radio" name="voice-mode" value="chat" checked><span><strong>대화</strong><small>음성을 듣고 답합니다</small></span></label><label><input type="radio" name="voice-mode" value="analyze"><span><strong>분석</strong><small>말투·녹음 품질을 살펴봅니다</small></span></label></fieldset>
+              <p class="help-text">녹음을 보낸 뒤 응답을 기다리는 방식입니다. 분석은 모델의 청취 의견이며, 최종 판단은 직접 듣고 확인하세요.</p>
+              <div class="voice-input"><div class="upload-zone compact" data-upload="voice-source"><input class="file-input" type="file" id="voice-source-file" accept="audio/*"><label class="upload-label" for="voice-source-file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m-4 4 4-4 4 4M5 14v6h14v-6"/></svg><span>음성 파일 선택</span><small>또는 파일을 끌어오세요</small></label><div class="upload-preview" hidden></div></div><button class="record-button" id="record-button" type="button"><span class="record-dot" aria-hidden="true"></span><span id="record-label">직접 녹음</span></button><p id="record-status" class="help-text" role="status">최대 30초, 시간이 되면 자동으로 마칩니다.</p></div>
+              <label class="field-label" for="voice-instruction">추가로 요청할 내용 <span>선택</span></label><textarea id="voice-instruction" maxlength="2000" class="small-textarea" rows="3" placeholder="예: 말의 속도와 문장 사이 쉼이 어떻게 들리는지 알려줘."></textarea>
+              <div class="conversation-heading"><h3>현재 대화</h3><span id="conversation-count">0개 메시지</span></div><div id="conversation" class="conversation" aria-live="polite"><p class="conversation-empty">음성을 보내면 이곳에 대화가 쌓입니다.</p></div>
+            </section>
+          </div>
+
+          <aside class="settings-panel" aria-label="생성 설정"><div class="settings-heading"><h2 id="settings-title">연기 설정</h2><span class="settings-indicator" aria-hidden="true"></span></div>
+            <label class="field-label" for="language">언어</label><select id="language"><option value="Korean">한국어</option><option value="English">English</option></select>
+            <div id="tts-settings"><label class="field-label" for="tts-engine">음성 모델</label><select id="tts-engine"><option value="higgs">Higgs TTS 3 · 4B / 24kHz</option></select><p class="help-text" id="tts-engine-note">감정·발성 태그와 참조 목소리를 사용합니다.</p><label class="field-label" for="emotion">감정</label><select id="emotion"><option value="normal">중립</option><option value="determination">결연함</option><option value="anger">분노</option><option value="fear">두려움</option><option value="sadness">슬픔</option><option value="relief">안도감</option><option value="enthusiasm">기쁨·열의</option></select>
+              <fieldset class="choice-field"><legend>발성</legend><div class="segmented"><label><input type="radio" name="delivery" value="normal" checked><span>보통</span></label><label><input type="radio" name="delivery" value="whispering"><span>속삭임</span></label><label><input type="radio" name="delivery" value="shouting"><span>외침</span></label></div></fieldset>
+              <fieldset class="choice-field"><legend>말의 속도</legend><div class="segmented"><label><input type="radio" name="speed" value="slow"><span>느리게</span></label><label><input type="radio" name="speed" value="normal" checked><span>보통</span></label><label><input type="radio" name="speed" value="fast"><span>빠르게</span></label></div></fieldset>
+              <p class="settings-note">짧은 대사부터 비교하면 설정에 따른 차이를 듣기 쉽습니다.</p>
+            </div>
+            <div id="convert-settings" hidden><div class="setting-callout"><span class="check-symbol" aria-hidden="true">✓</span><div><strong>원본 연기 유지</strong><p>원본의 감정과 말의 흐름을 기준으로 목소리를 변환합니다.</p></div></div></div>
+            <div id="voice-settings" hidden><label class="check-field"><input type="checkbox" id="read-response" checked><span><strong>답변을 음성으로 듣기</strong><small>텍스트 답변과 함께 음성을 생성합니다.</small></span></label><label class="field-label" for="response-voice">답변 화자</label><select id="response-voice" class="voice-select"><option value="default">기본 화자</option></select><p id="response-voice-note" class="help-text voice-description">기본 모델 화자를 사용합니다.</p><audio id="response-voice-preview" class="voice-preview" controls preload="none" aria-label="답변 화자 미리 듣기" hidden></audio></div>
+            <details class="advanced-settings"><summary>세부 설정</summary><div class="advanced-body"><label class="field-label" for="seed">시드</label><input type="number" id="seed" min="0" max="2147483647" value="42" step="1"><p class="help-text">같은 조건의 테이크를 비교할 때 고정합니다.</p><label class="field-label" for="max-tokens">최대 생성 토큰</label><input type="number" id="max-tokens" min="128" max="1536" step="1" value="512"><p class="help-text">생성 길이의 상한입니다. 긴 대사가 끝까지 나오지 않으면 늘려주세요.</p></div></details>
+            <div class="generate-area"><button id="generate-button" class="generate-button" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg><span id="generate-label">음성 생성</span></button><p id="generate-hint">설정한 조건으로 새 테이크를 만듭니다.</p></div>
+          </aside>
+        </div>
+      </form>
+
+      <section id="progress-panel" class="progress-panel" aria-labelledby="progress-title" hidden><div class="progress-main"><span class="progress-spinner" aria-hidden="true"></span><div><h2 id="progress-title">작업 준비 중</h2><p id="progress-message">요청을 준비하고 있습니다.</p></div></div><div class="progress-actions"><span id="progress-time">0:00</span><button id="cancel-job" type="button" class="button quiet-button">작업 취소</button></div><div class="progress-line" aria-hidden="true"></div></section>
+      <div id="job-announcement" class="sr-only" role="status" aria-live="polite"></div>
+
+      <section class="takes-section" aria-labelledby="takes-heading"><div class="takes-heading"><div><span class="step-label">YOUR TAKES</span><h2 id="takes-heading">테이크 보관함 <span id="takes-count">0</span></h2><p>들어보고, 비교하고, 가장 좋은 테이크를 선택하세요.</p></div><button id="refresh-takes" class="button text-button" type="button">목록 새로고침</button></div><div class="take-toolbar"><label class="sr-only" for="take-search">테이크 검색</label><input id="take-search" type="search" placeholder="대사 또는 작업 이름으로 검색"><label class="sr-only" for="take-filter">작업 유형</label><select id="take-filter"><option value="all">전체 테이크</option><option value="tts">대사 연기</option><option value="convert">보이스체인지</option><option value="chat">음성 대화</option><option value="analyze">음성 분석</option></select></div><div id="takes-list"><div class="takes-empty"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="10" width="32" height="28" rx="5"/><circle cx="18" cy="24" r="5"/><circle cx="30" cy="24" r="5"/><path d="M14 37v-5h20v5"/></svg><div><h3>첫 테이크를 만들어 보세요</h3><p>생성이 끝나면 재생 버튼과 다운로드가 표시됩니다.</p></div></div></div></section>
+    </main>
+    <footer class="app-footer"><span>Take Studio</span><p>입력부터 생성 결과까지, 로컬에서 다루는 음성 작업.</p><span id="footer-status">연결 확인 중</span></footer>
+  </div>
+</body>
+</html>

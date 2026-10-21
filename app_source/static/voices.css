@@ -1,0 +1,7 @@
+.voice-select{width:100%;margin-top:14px}
+.voice-description{min-height:22px;margin:8px 0 0}
+.voice-preview{display:block;width:100%;height:42px;margin:12px 0 0}
+.voice-preview[hidden],#tts-custom-reference[hidden],#convert-custom-reference[hidden]{display:none}
+#tts-custom-reference,#convert-custom-reference{margin-top:15px}
+#tts-custom-reference .field-label{display:block}
+.conversion-reference .voice-select{margin-top:3px}

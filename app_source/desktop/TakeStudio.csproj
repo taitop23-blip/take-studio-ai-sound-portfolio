@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType><TargetFramework>net9.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    <AssemblyName>Take Studio</AssemblyName><Version>1.0.0</Version><Product>Take Studio</Product>
+    <Description>Local voice production workspace</Description><Company>Take Studio</Company>
+    <ApplicationIcon>../static/take-studio.ico</ApplicationIcon>
+    <PublishSingleFile>true</PublishSingleFile><SelfContained>true</SelfContained><RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+  </PropertyGroup>
+  <ItemGroup><PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" /></ItemGroup>
+  <ItemGroup><EmbeddedResource Include="../static/take-studio.png" LogicalName="TakeStudio.Icon.png" /></ItemGroup>
+</Project>
